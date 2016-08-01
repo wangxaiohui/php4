@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+    a:link ,a:visited{ text-decoration:none; color: #C27373 }
+	</style>
+</head>
+<body>
+<h1 align="center">学生信息表</h1>
+<h4 align="center" style="color:#AD9595 " >记录数为<?php echo $count;?>条</h4>
+
+
+<table width="800" border="1" bordercolor="red" rules="all" align="center" style="text-decoration:none;text-align: center">
+   <tr >
+	   <td colspan="7"> 
+		   <h3 align="right">
+				   <a href="index.php?p=Backend&c=User&a=add" style="text-decoration: none;color: red;">
+				    添加学生信息
+				    </a>
+		    </h3>
+		</td>
+    </tr>
+	<tr>
+		<th>编号</th>
+		<th>名字</th>
+		<th>昵称</th>
+		<th>邮箱</th>
+		<th>手机号</th>
+		
+		<th>注册时间</th>
+		<th>操作</th>
+	</tr>
+	
+	<?php foreach ($user as $users) {?>
+	<tr>
+		<td><?php echo $users->id?></td>
+		<td><?php echo $users->name?></td>
+		<td><?php echo $users->nickname?></td>
+		<td><?php echo $users->email?></td>
+		<td><?php echo $users->mobile_number?></td>
+		<td><?php echo date( "Y-m-d H:i:s",$users->register_time)?></td>
+		<td ><a href="index.php?p=backend&c=User&a=delete&id=<?= $user->id?>" >删除</a>
+            |<a href="index.php?p=backend&c=User&a=update&id=<?= $user->id?>" style="text-decoration: none;color:#7E2DE3;" >修改</a>
+		</td>
+	</tr>
+	<?php }?>
+	<tr>
+		<td colspan="7">
+			<!-- <?php
+			           for($i=$star;$i<$end;++$i){
+			              echo $i;
+			                      
+			           } ?> -->
+		</td>
+	</tr>
+		
+</table>
+
+
+
+</body>
+</html>

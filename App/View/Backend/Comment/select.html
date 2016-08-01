@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="TQBlog V2.0 Release 20140101" />
+<meta name="robots" content="none" />
+<title>www.tqblog.com - 评论管理 - Powered by TQBlog</title>
+<link href="web/Backend/css/admin.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="web/Backend/css/jquery.bettertip.css" type="text/css" media="screen" />
+<link rel="stylesheet" type="text/css" href="web/Backend/css/jquery-ui.custom.css"/>
+<script src="web/Backend/script/common.js" type="text/javascript"></script>
+<script src="web/Backend/script/jquery.bettertip.pack.js" type="text/javascript"></script>
+<script src="web/Backend/script/jquery-ui.custom.min.js" type="text/javascript"></script>
+</head>
+<body>
+<section class="main">
+<div id="divMain">
+<div class="divHeader">评论管理</div>
+<div class="SubMenu"><a href="content/plugin/Security/main.php"><span class="m-right">Security设置</span></a><a href=""><span class="m-left ">审核评论</span></a></div>
+<div id="divMain2">
+<form class="search" id="search" method="post" action="Index.php?p=Backend&c=Comment&a=select">
+	<p>搜索&nbsp;&nbsp;&nbsp;&nbsp;<input name="search" style="width:450px;" type="text" value="<?= $search?>" /> &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="button" value="提交"/>
+	</p>
+</form>
+<form method="post" action="Index.php?p=Backend&c=Comment&a=delete">
+	<table border="1" class="tableFull tableBorder tableBorder-thcenter">
+		<tr>
+			<th>ID</th>
+			<th>上层ID</th>
+			<th>用户</th>
+			<th>评论</th>
+			<th>文章名字</th>
+			<th>日期</th>
+			<th>操作</th>
+			<th><a href="" onclick="BatchSelectAll();return false;">全选</a></th>
+		</tr>
+	 <?php foreach($comment as $value) {?>
+		<tr>
+			<th><?= $value->id?></th>
+			<th><?= $value->parent_content?></th>
+			<th><?= $value->name?></th>
+			<th><?= $value->content?></th>
+			<th><?= $value->title?></th>
+			<th><?= date("Y-m-d H:i:s", $value->time)?></th>
+		    <th><a href="Index.php?p=Backend&c=Comment&a=delete&id=<?= $value->id?>">删除</a></th>
+			<th><input type="checkbox" name="del[]" value="<?= $value->id?>"></th>
+		
+		</tr>
+	<?php }?>	
+
+			</table><hr/>
+	<p style="float:right;">
+		<input type="submit" name="all_del"  value="所选全部删除"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="all_audit"  value="所选全部审核"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+	<p class="pagebar">
+	    <?= $pagerHtml?>
+	</p><hr/>
+</form>
+</div>
+<script type="text/javascript">ActiveLeftMenu("aCommentAdmin");</script>
+<script type="text/javascript">AddHeaderIcon("web/Backend/image/admin/comments_32.png");</script></div>
+</section>
+</body>
+</html><!--60.413ms-->

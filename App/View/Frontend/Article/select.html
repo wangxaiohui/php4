@@ -1,0 +1,176 @@
+<{include file="./header.html"}>
+
+<div id="divAll">
+	<div id="divPage">
+	<div id="divMiddle">
+		<div id="divTop">
+			<h1 id="BlogTitle"><a href="http://www.myblog.com">www.myblog.com</a></h1>
+			<h3 id="BlogSubTitle">Welcome to 我的博客</h3>
+		</div>
+		<div id="divNavBar">
+			<ul>
+				<li id="nvabar-item-index"><a href="">首页</a></li><li id="navbar-page-2"><a href="">留言本</a></li>			</ul>
+		</div>
+
+		<div id="divMain">
+ <{foreach from=$article key='key' item='value'}>
+<div class="post multi">
+	<h4 class="post-date"><{$value->date|date_format:"%Y-%m-%d %H:%M:%S"}></h4>
+	<h2 class="post-title"><a href="index.php?p=Frontend&c=Article&a=content&id=<{$value->id}>" target="_blank"><{$value->title}></a></h2>
+	<div class="post-body">
+		<{$value->content|strip_tags|truncate:330:'...':true}>
+		
+	</div>
+	<h5 class="post-tags"></h5>
+	<h6 class="post-footer">
+		作者:<{$value->user_name}> | 分类:<{$value->category_name}> | 阅读:<{$value->read_count}> | 赞:<{$value->good}>| 评论:<{$value->article_comment}></h6>
+</div>
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+<{/foreach}>
+
+<div class="pagebar" > 
+       <{$pageHtml}>
+  		<input type="hidden" name="module" value="Index"/>
+			<input type="hidden" name="action" value="index"/>
+			
+			<input type="text" id="page" name="page" value="1"  style="width:20px" onFocus="input_focus(this)" onBlur="input_blur(this)"/>
+			<input type="submit" value="提交"/>
+		</form>
+		<script>
+			function input_focus(e){
+				if(e.value == e.defaultValue) e.value = '';
+			}
+
+			function input_blur(e){
+				if(e.value == '') e.value = e.defaultValue;
+			}
+		</script>
+  </div>
+		</div>
+<div id="divSidebar">
+ 
+<dl class="function" id="divSearchPanel">
+<dt class="function_t">文章标题搜索</dt><dd class="function_c">
+
+<div>
+	<form name="search" method="post" action="index.php?p=Frontend&c=Article&a=select">
+		<input type="text" name="search" size="11" value="<{$search}>"/>
+		<input type="hidden" name="category_id" size="20" 
+		<{if empty($category_id)}>
+						value=""
+						<{else}>
+		       value="<{$category_id}>"
+					    <{/if}> 
+		/>
+		<input type="submit" value="搜索" />
+	</form>
+
+		<form name="search" method="post" action="index.php?p=Frontend&c=Article&a=select">
+					<p>类别为：</p>
+				<p><input type="text" name="category_id" size="20" 
+		        <{if empty($value->content)}>
+					value="该类没有文章"
+				<{else}>
+						<{if empty($category_id)}>
+						value=""
+						<{else}>
+		                value="<{$value->category_name}>"
+					    <{/if}>
+				<{/if}>
+				/> 
+				</p>
+
+				<!-- <select id="edtParentID" name="ParentID" class="edit" size="1">
+						
+							<{foreach from=$category key='key' item='value'}>
+				<option <{if empty($value->content)}>
+				         value="该类没有文章" 
+					     <{else}>
+						     <{if empty($category_id)}>
+						      value=""
+						       <{else}>
+						                      value="<{$value->name}>" selected
+					          <{/if}>
+				       <{/if}> >
+					<{str_repeat('&nbsp;',$value->level*4)}><{$value->name}>
+							</option>
+							
+				            <{/foreach}>			
+						</select>
+				 -->
+
+				<input type="hidden" name="search" size="11" value="<{$search}>"/>
+				<p>
+				<a href="Index.php?p=Frontend&c=Article&a=select" > 取消全部搜索</a>
+				</p>
+			</form> 
+</div>
+
+
+</dd>
+</dl> 
+<dl class="function" id="divCalendar">
+<dt style="display:none;"></dt><dd class="function_c">
+
+<div>
+
+</div>
+
+
+</dd>
+</dl> 
+<dl class="function" id="divCatalog">
+<dt class="function_t">文章分类</dt><dd class="function_c">
+
+<ul>
+       <{foreach from=$category key='key' item='value'}>
+		<li>
+		<a href="index.php?p=Frontend&c=Article&a=select&category_id=<{$value->id}>&search=<{$search}>" target="_blank"><{str_repeat('&nbsp;',$value->level*4)}><{$value->name}></a>
+		</li>
+       <{/foreach}>
+	</ul>
+
+</dd>
+</dl> 
+<dl class="function" id="divComments">
+<dt class="function_t">最新留言</dt><dd class="function_c">
+
+
+<ul></ul>
+
+</dd>
+</dl> 
+<dl class="function" id="divArchives">
+<dt class="function_t">文章归档</dt><dd class="function_c">
+
+
+<ul></ul>
+
+</dd>
+</dl> 
+<dl class="function" id="divFavorites">
+<dt class="function_t">网站收藏</dt><dd class="function_c">
+
+
+<ul><li><a href="" target="_blank">myblog社区</a></li><li><a href="" target="_blank">myblog应用中心</a></li></ul>
+
+</dd>
+</dl> 
+<dl class="function" id="divLinkage">
+<dt class="function_t">友情链接</dt><dd class="function_c">
+
+
+<ul><li><a href="" target="_blank" title="myblog开源博客系统">myblog官网</a></li></ul>
+
+</dd>
+</dl> 
+<dl class="function" id="divMisc">
+<dt style="display:none;"></dt><dd class="function_c">
+
+
+<ul><li><a href="" target="_blank"><img src="Web/Frontend/image/logo/myblog.gif" height="31" width="88" alt="myblog" /></a></li><li><a href="" target="_blank"><img src="Web/Frontend/image/logo/rss.png" height="31" width="88" alt="订阅本站的 RSS 2.0 新闻聚合" /></a></li></ul>
+
+</dd>
+</dl>		</div>
+<{include file="./footer.html"}>		
